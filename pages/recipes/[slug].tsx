@@ -3,7 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import ReactMarkdown from "react-markdown"
 import { getRecipe, IRecipe } from "../../firebase/recipe-service"
-import renderers from "./renderers"
+import renderers from "../../lib/renderers"
 
 type RecipesProps = {
   recipe: IRecipe
