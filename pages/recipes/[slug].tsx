@@ -6,7 +6,7 @@ import { getRecipe, IRecipe } from "../../firebase/recipe-service"
 import renderers from "../../lib/renderers"
 
 type RecipesProps = {
-  recipe: IRecipe
+  recipe: IRecipe | null
 }
 
 export default function Recipes(props: RecipesProps) {
@@ -16,6 +16,10 @@ export default function Recipes(props: RecipesProps) {
 
   if (router.isFallback) {
     return <div>Loading...</div>
+  }
+
+  if (!recipe) {
+    return null
   }
 
   return (
@@ -116,17 +120,23 @@ export default function Recipes(props: RecipesProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const slug = params?.slug
-    ? Array.isArray(params.slug) ? params.slug.join("-") : params.slug
-    : null
+  try {
+    const slug = params?.slug
+      ? Array.isArray(params.slug) ? params.slug.join("-") : params.slug
+      : null
 
-  const recipe = slug ? await getRecipe(slug) : null
+    const recipe = slug ? await getRecipe(slug) : null
+    console.log(slug, recipe)
 
-  return {
-    props: {
-      recipe,
-      revalidate: 60 * 60
+    return {
+      props: {
+        recipe,
+        revalidate: 60 * 60
+      }
     }
+  } catch (error) {
+    console.log(error);
+    throw error
   }
 }
 
