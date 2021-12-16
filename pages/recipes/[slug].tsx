@@ -124,7 +124,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
-      recipe
+      recipe,
+      revalidate: 60 * 60
     }
   }
 }
