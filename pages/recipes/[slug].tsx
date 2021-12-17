@@ -1,9 +1,9 @@
 import { GetStaticProps } from "next"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import ReactMarkdown from "react-markdown"
 import { getRecipe, IRecipe } from "../../firebase/recipe-service"
 import renderers from "../../lib/renderers"
+import Link from "../../components/ui/link"
 
 type RecipesProps = {
   recipe: IRecipe | null
@@ -37,7 +37,7 @@ export default function Recipes(props: RecipesProps) {
             {/* <RecipeMetrics recipe={recipe} /> */}
             {recipe.image && (
               <img
-                className="object-cover w-full"
+                className="object-cover w-full h-[33vh]"
                 src={recipe.image}
                 alt={recipe.name}
               />
@@ -126,7 +126,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       : null
 
     const recipe = slug ? await getRecipe(slug) : null
-    console.log(slug, recipe)
 
     return {
       props: {

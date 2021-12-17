@@ -1,0 +1,10 @@
+.button {
+  @apply rounded-lg 
+  /* border border-gray-400  */
+  px-4 p-3 
+  cursor-pointer 
+  text-sm font-bold uppercase tracking-wider 
+  transition ease-linear duration-200 
+  hover:backdrop-brightness-90 hover:drop-shadow-lg hover:no-underline 
+  focus:outline-none focus:ring-2
+}

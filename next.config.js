@@ -4,14 +4,16 @@ module.exports = {
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
-  async redirects() {
+  async rewrites() {    
     return [
       {
         source: "/oppskrifter/:slug*",
         destination: "/recipes/:slug*",
-        locale: false,
-        permanent: false,
       },
+      {
+        source: "/logg-inn",
+        destination: "/login",
+      }
     ]
   },
 }
