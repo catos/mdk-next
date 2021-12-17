@@ -8,3 +8,11 @@
   hover:backdrop-brightness-90 hover:drop-shadow-lg hover:no-underline 
   focus:outline-none focus:ring-2
 }
+
+.color-primary {
+  @apply  
+    text-white 
+    bg-primary-600 
+    hover:bg-primary-700 
+    focus:ring-primary-700;
+}

@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-col gap-4 items-center py-8 px-4 sm:px-0 bg-slate-100">
       <section className="container mx-auto text-center">
-        <Logo />
+        <Logo className="w-16 h-16 inline-block" />
         <p className="mt-4 leading-tight">
           Lorem ipsum dolor amet consectetur, adipisicing elit. Illo maiores
           iure in vitae iusto fuga ratione?

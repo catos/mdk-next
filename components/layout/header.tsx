@@ -9,11 +9,11 @@ type Props = {
 
 export default function Header({ user }: Props) {
   return (
-    <header className="fixed z-50 w-full top-0 flex flex-wrap items-center justify-between h-16 px-4 sm:p-0 bg-white">
+    <header className="fixed z-50 w-full top-0 flex flex-wrap items-center justify-between h-16 px-4 sm:p-0 bg-white shadow-lg">
       <nav aria-label="Main navigation" className="container mx-auto flex items-center">
         <Link href="/" className="flex items-center">
-          <Logo />
-          <span className="pl-2 font-bold text-orange-800 hidden sm:inline">Min Digitale Kokebok</span>
+          <Logo className="w-8 h-8" />
+          <span className="pl-2 font-bold text-orange-600 hidden sm:inline">Min Digitale Kokebok</span>
         </Link>
         <div className="flex flex-1 gap-10 items-center justify-end">
           <Button>
@@ -54,6 +54,6 @@ type HeaderLinkProps = {
 
 function HeaderLink(props: HeaderLinkProps) {
   return (
-    <Link className="hidden sm:inline-block text-base font-medium text-gray-700 hover:text-orange-500" {...props} />
+    <Link className="hidden sm:inline-block text-base font-medium text-gray-700 hover:text-orange-500 hover:no-underline" {...props} />
   )
 }

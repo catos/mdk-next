@@ -7,7 +7,7 @@ type LinkProps = {
 }
 
 export default function Link({ href, className, children }: LinkProps) {
-  const classes = ["text-slate-600"]
+  const classes = ["text-slate-600 hover:underline"]
   if (className) classes.push(className)
 
   return (

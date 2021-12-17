@@ -1,9 +1,13 @@
 const primary = "#F36A3E"
 const secondary = "#FFB30B"
 
-export default function Logo() {
+type LogoProps= {
+  className?: string
+}
+
+export default function Logo({className}: LogoProps) {
   return (
-    <svg viewBox="0 0 81 81" version="1.1" className="inline-block w-8 h-8">
+    <svg viewBox="0 0 81 81" version="1.1" className={className}>
       <g transform="matrix(0.449977,-0.449977,0.449977,0.449977,-2128.39,1925.9)">
         <g transform="matrix(1,0,0,1,3940,-1120.56)">
           <path
