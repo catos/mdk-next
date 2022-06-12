@@ -16,7 +16,7 @@ export default function Layout({ user, children }: Props) {
         <meta name="description" content="Min Digitale Kokebok" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header user={user} />
+      <Header />
       <main className="bg-white py-4 px-4 min-h-[80vh] sm:px-0">
         {children}
       </main>

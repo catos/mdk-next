@@ -1,19 +1,20 @@
-import { User } from "firebase/auth";
 import Logo from "../logo";
 import Link from "../ui/link";
 import Button from "../ui/button";
+import useAuth from "../../contexts/auth";
 
-type Props = {
-  user?: User | null
-}
+export default function Header() {
+  const { isAuthenticated, user, logout } = useAuth()
+  
+  const handleSubmit = () => {
+    logout()
+  }
 
-export default function Header({ user }: Props) {
   return (
     <header className="fixed z-50 w-full top-0 flex flex-wrap items-center justify-between h-16 px-4 sm:p-0 bg-white shadow-lg">
       <nav aria-label="Main navigation" className="container mx-auto flex items-center">
         <Link href="/" className="flex items-center">
           <Logo className="w-8 h-8" />
-          <span className="pl-2 font-bold text-orange-600 hidden sm:inline">Min Digitale Kokebok</span>
         </Link>
         <div className="flex flex-1 gap-10 items-center justify-end">
           <Button>
@@ -28,11 +29,11 @@ export default function Header({ user }: Props) {
           </Button>
           <HeaderLink href="/oppskrifter">Oppskrifter</HeaderLink>
           <HeaderLink href="/meny">Meny</HeaderLink>
-          {user ?
+          {isAuthenticated ?
             (
               <>
                 <span>{user.displayName}</span>
-                <form action="/logout" method="post">
+                <form onSubmit={handleSubmit} method="post">
                   <button type="submit" className="button">
                     Logout
                   </button>
