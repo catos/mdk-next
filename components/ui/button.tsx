@@ -1,21 +1,27 @@
 import styles from "./button.module.css"
 
 type ButtonProps = {
-  color?: "primary" | "secondary" | "default"
+  color?: "primary" | "secondary" | "disabled"
   className?: string
+  rounded?: boolean
   children: React.ReactNode
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export default function Button({color = "default", className, ...rest}: ButtonProps) {
-  
+export default function Button({ color = "primary", className, rounded = false, disabled, ...rest }: ButtonProps) {
+
+  if (disabled) {
+    color = "disabled"
+  }
+
   const classes = [
     styles.button,
-    styles[`color-${color}`]
+    rounded ? "rounded-full" : "rounded-lg",
+    styles[`color-${color}`],
+    className
   ]
 
-  if (className) classes.push(className)
-
   return (
-    <button className={classes.join(" ")} {...rest} />
+    <button className={classes.join(" ")} disabled={disabled} {...rest} />
+    // <button className="bg-primary-600 p-4 rounded-md rounded-full" {...rest} />
   )
 }

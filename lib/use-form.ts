@@ -24,7 +24,6 @@ function useForm<T>(initialValues: T | undefined, onSubmit: OnSubmitType) {
     if (event) {
       event.preventDefault()
     }
-    console.log("use-form.handleSubmit");
 
     // TODO: support validation ?
     onSubmit(values, errors)
