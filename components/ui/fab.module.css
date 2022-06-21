@@ -1,0 +1,18 @@
+.button {
+  @apply rounded-full 
+  /* border border-gray-400  */
+  p-1
+  cursor-pointer 
+  text-sm font-bold uppercase tracking-wider 
+  transition ease-linear duration-200 
+  hover:backdrop-brightness-90 hover:drop-shadow-lg hover:no-underline 
+  focus:outline-none focus:ring-2
+}
+
+.color-primary {
+  @apply  
+    text-white 
+    bg-primary-600 
+    hover:bg-primary-700 
+    focus:ring-primary-700;
+}
