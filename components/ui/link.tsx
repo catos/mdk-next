@@ -7,13 +7,11 @@ type LinkProps = {
 }
 
 export default function Link({ href, className, children }: LinkProps) {
-  // TODO: overwrite default classes with props
-  const classes = ["text-slate-600 hover:underline"]
-  if (className) classes.push(className)
-
+  const classes = className ?? "text-primary-600 hover:underline"
+  
   return (
     <NextLink href={href}>
-      <a className={classes.join(" ")}>{children}</a>
+      <a className={classes}>{children}</a>
     </NextLink>
   )
 }

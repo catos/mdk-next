@@ -20,4 +20,7 @@
   a {
     @apply text-blue-900 hover:underline;
   }
+  p {
+    @apply mb-2
+  }
 }
