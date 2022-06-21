@@ -1,7 +1,7 @@
-import Logo from "../logo";
-import Link from "../ui/link";
-import Button from "../ui/button";
-import useAuth from "../../contexts/auth";
+import Logo from "components/logo";
+import Link from "components/ui/link";
+import Button from "components/ui/button";
+import useAuth from "contexts/auth";
 
 export default function Header() {
   const { isAuthenticated, user, logout } = useAuth()

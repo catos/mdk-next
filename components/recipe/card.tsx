@@ -1,6 +1,6 @@
 import Image from "next/image"
-import { IRecipe } from "../../firebase/recipe-service"
-import Link from "../ui/link"
+import { IRecipe } from "firebase/recipe-service"
+import Link from "components/ui/link"
 
 // TODO: move images to firebase
 export default function RecipeCard({ recipe }: { recipe: IRecipe }) {

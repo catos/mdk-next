@@ -1,10 +1,8 @@
 import { useRouter } from "next/router";
-import Logo from "../components/logo";
-import Button from "../components/ui/button";
-import Input from "../components/ui/input";
-import Link from "../components/ui/link";
-import useAuth from "../contexts/auth";
-import useForm from "../lib/use-form";
+import Logo from "components/logo";
+import { Button, Input, Link } from "components/ui";
+import useAuth from "contexts/auth";
+import useForm from "lib/use-form";
 
 interface IForm {
   username: string

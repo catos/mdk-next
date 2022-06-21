@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next"
-import RecipeCard from "../../components/recipe/card"
+import RecipeCard from "components/recipe/card"
 import { getRecipes, IRecipe } from "../../firebase/recipe-service"
 
 type RecipesProps = {

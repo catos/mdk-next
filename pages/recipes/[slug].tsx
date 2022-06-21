@@ -2,8 +2,8 @@ import { GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import ReactMarkdown from "react-markdown"
 import { getRecipe, IRecipe } from "../../firebase/recipe-service"
-import renderers from "../../lib/renderers"
-import Link from "../../components/ui/link"
+import renderers from "lib/renderers"
+import { Link } from "components/ui"
 
 type RecipesProps = {
   recipe: IRecipe | null

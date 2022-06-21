@@ -1,6 +1,6 @@
 import * as React from "react"
 import clsx from "clsx"
-import slugify from "../../lib/slugify"
+import slugify from "lib/slugify"
 
 interface IListItemProps {
   index: number

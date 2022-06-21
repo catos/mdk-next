@@ -2,8 +2,8 @@
 // TODO: finish custom renderers: https://github.com/remarkjs/react-markdown#appendix-b-node-types
 // TODO: move all to separate components ?
 
-import ListItem from "../components/recipe/list-item"
-import Timer from "../components/recipe/timer"
+import ListItem from "components/recipe/list-item"
+import Timer from "components/recipe/timer"
 
 const renderers = {
   h1: (props: any) => {

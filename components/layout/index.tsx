@@ -10,14 +10,14 @@ type Props = {
 
 export default function Layout({ user, children }: Props) {
   return (
-    <div className="pt-16 overflow-hidden">
+    <div className="pt-16 overflow-hidden bg-slate-100">
       <Head>
         <title>MDK</title>
         <meta name="description" content="Min Digitale Kokebok" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="bg-white py-4 px-4 min-h-[80vh] sm:px-0">
+      <main className="py-4 px-4 min-h-[50vh] sm:px-0 container mx-auto">
         {children}
       </main>
       <Footer />

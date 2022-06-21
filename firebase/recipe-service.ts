@@ -6,8 +6,9 @@ import {
   limit,
   orderBy,
   query,
+  setDoc,
 } from "firebase/firestore"
-import slugify from "../lib/slugify"
+import slugify from "lib/slugify"
 import { db } from "./firebase"
 
 export interface IRecipe {
@@ -63,4 +64,9 @@ export async function getRecipe(id: string, rendered = true) {
     ...dbRecipe,
   } as IRecipe
 
+}
+
+export async function saveRecipe(recipe: IRecipe) {
+  const ref = doc(db, "recipes", recipe.id)  
+  await setDoc(ref, recipe)
 }
