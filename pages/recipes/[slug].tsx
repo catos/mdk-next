@@ -28,11 +28,9 @@ export default function Recipes(props: RecipesProps) {
         <div className="container mx-auto flex flex-col bg-white gap-4">
           <div className="relative">
             {/* TODO: only show for admins */}
-            <Link href={`/admin/recipes/${recipe.id}`}            >
+            <Link href={`/admin/recipes/${recipe.id}`} className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
               {/* <PencilAltIcon className="w-5 h-5" /> */}
-              <a className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
-                Edit
-              </a>
+                E
             </Link>
             {/* <RecipeMetrics recipe={recipe} /> */}
             {recipe.image && (
