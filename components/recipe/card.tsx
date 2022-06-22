@@ -1,11 +1,12 @@
 import Image from "next/image"
 import { IRecipe } from "firebase/recipe-service"
 import Link from "components/ui/link"
+import slugify from "lib/slugify"
 
 // TODO: move images to firebase
 export default function RecipeCard({ recipe }: { recipe: IRecipe }) {
   return (
-    <Link href={`/oppskrifter/${recipe.id}`} className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+    <Link href={`/oppskrifter/${slugify(recipe.name)}-${recipe.id}`} className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg">
       {recipe.image.indexOf("firebasestorage.googleapis.com") > 0
         ? <Image
           className="w-full h-64 object-cover"

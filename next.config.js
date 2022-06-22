@@ -11,6 +11,10 @@ module.exports = {
         destination: "/recipes/:slug*",
       },
       {
+        source: "/meny/:slug*",
+        destination: "/menus/:slug*",
+      },
+      {
         source: "/logg-inn",
         destination: "/login",
       }

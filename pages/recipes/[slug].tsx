@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown"
 import { getRecipe, IRecipe } from "../../firebase/recipe-service"
 import renderers from "lib/renderers"
 import { Link } from "components/ui"
+import { getSlugId } from "lib/get-slug-id"
 
 type RecipesProps = {
   recipe: IRecipe | null
@@ -30,7 +31,7 @@ export default function Recipes(props: RecipesProps) {
             {/* TODO: only show for admins */}
             <Link href={`/admin/recipes/${recipe.id}`} className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
               {/* <PencilAltIcon className="w-5 h-5" /> */}
-                E
+              E
             </Link>
             {/* <RecipeMetrics recipe={recipe} /> */}
             {recipe.image && (
@@ -117,13 +118,21 @@ export default function Recipes(props: RecipesProps) {
   )
 }
 
+
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const slug = params?.slug
-      ? Array.isArray(params.slug) ? params.slug.join("-") : params.slug
-      : null
+    const id = getSlugId(params?.slug)
 
-    const recipe = slug ? await getRecipe(slug) : null
+    if (!id) {
+      return {
+        props: {
+          notFound: true
+        }
+      }
+    }
+
+    const recipe = id ? await getRecipe(id) : null
 
     return {
       props: {
