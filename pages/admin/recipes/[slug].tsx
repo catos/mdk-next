@@ -23,10 +23,11 @@ export default function Page({ recipe }: IProps) {
     <Form onSubmit={handleSubmit}>
       <div className="fixed bottom-2 right-2 flex flex-col gap-2">
         <Button color="primary" type="submit" rounded>S</Button>
+        <Button color="secondary" href={`/admin/recipes`} rounded>AR</Button>
         <Button color="secondary" href={`/oppskrifter/${slugify(values?.name ?? "")}-${values?.id}`} rounded>R</Button>
       </div>
       <Input name="type" type="number" onChange={handleChange} value={values?.type} />
-      <Input name="created" type="date" onChange={handleChange} value={values?.created} />
+      <Input name="created" type="number" onChange={handleChange} value={values?.created} />
       <Input name="name" onChange={handleChange} value={values?.name} />
       <Input name="image" onChange={handleChange} value={values?.image} />
       <Input name="source" onChange={handleChange} value={values?.source} />

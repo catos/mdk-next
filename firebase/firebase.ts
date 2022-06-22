@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import { getFirestore } from "firebase/firestore"
+import { getFirestore, Timestamp } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyCRxj5TuXBO1uIVT2Teho9lUbG0rFngPSc",
@@ -19,4 +19,6 @@ const auth = getAuth()
 const googleAuthProvider = new GoogleAuthProvider()
 const signInWithGoogle = () => signInWithPopup(auth, googleAuthProvider)
 
-export { db, auth, googleAuthProvider, signInWithGoogle }
+const fromMillis = Timestamp.fromMillis
+
+export { db, auth, googleAuthProvider, signInWithGoogle, fromMillis }

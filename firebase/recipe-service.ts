@@ -7,6 +7,8 @@ import {
   orderBy,
   query,
   setDoc,
+  startAfter,
+  startAt,
   where,
 } from "firebase/firestore"
 import slugify from "lib/slugify"
@@ -28,23 +30,33 @@ export interface IRecipe {
   type: number
 }
 
-export async function getRecipes(take = 10) {
+
+// https://stackoverflow.com/a/69036032
+export async function getRecipes(take = 10, last?: any) {
+  const ref = collection(db, "recipes")
+
+  const constraints = []
+
+  if (last) constraints.push(startAfter(last))
+
   const q = query(
-    collection(db, "recipes"),
+    ref,
     where("type", "==" , 1),
     // TODO: where("published", "==" , true)
+    orderBy("created", "desc"),
+    ...constraints,
     limit(take),
-    orderBy("created", "desc")
   )
-
+   
   const snapshot = await getDocs(q)
   const recipes = snapshot.docs.map((doc) => {
     // TODO: replace id with slug
-    const dbRecipe = doc.data()
+    const data = doc.data()
     return {
       id: doc.id,
-      slug: slugify(dbRecipe.name),
-      ...dbRecipe,
+      // slug: slugify(data.name),
+      ...data,
+      created: data.created.toMillis() || 0,
     } as IRecipe
   })
 
