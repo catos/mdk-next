@@ -7,6 +7,7 @@ import {
   orderBy,
   query,
   setDoc,
+  where,
 } from "firebase/firestore"
 import slugify from "lib/slugify"
 import { db } from "./firebase"
@@ -30,6 +31,7 @@ export interface IRecipe {
 export async function getRecipes(take = 10) {
   const q = query(
     collection(db, "recipes"),
+    where("type", "==" , 1),
     // TODO: where("published", "==" , true)
     limit(take),
     orderBy("created", "desc")

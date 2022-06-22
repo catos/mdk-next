@@ -25,26 +25,24 @@ export default function Recipes(props: RecipesProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <section className="flex flex-col gap-4">
-        <div className="container mx-auto flex flex-col bg-white gap-4">
-          <div className="relative">
-            {/* TODO: only show for admins */}
-            <Link href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`} className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
-              {/* <PencilAltIcon className="w-5 h-5" /> */}
-              E
-            </Link>
-            {/* <RecipeMetrics recipe={recipe} /> */}
-            {recipe.image && (
-              <img
-                className="object-cover w-full h-[33vh]"
-                src={recipe.image}
-                alt={recipe.name}
-              />
-            )}
-            <div className="text-white absolute bottom-0 text-center w-full bg-black bg-opacity-50 py-4">
-              <h1 className="text-white font-serif">{recipe.name}</h1>
-            </div>
+    <div className="flex flex-col gap-4 bg-white p-4">
+      <section className="flex flex-col">
+        <div className="relative">
+          {/* TODO: only show for admins */}
+          <Link href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`} className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
+            {/* <PencilAltIcon className="w-5 h-5" /> */}
+            E
+          </Link>
+          {/* <RecipeMetrics recipe={recipe} /> */}
+          {recipe.image && (
+            <img
+              className="object-cover w-full h-[33vh]"
+              src={recipe.image}
+              alt={recipe.name}
+            />
+          )}
+          <div className="text-white absolute bottom-0 text-center w-full bg-black bg-opacity-50 py-4">
+            <h1 className="text-white font-serif">{recipe.name}</h1>
           </div>
         </div>
 
@@ -94,24 +92,24 @@ export default function Recipes(props: RecipesProps) {
       </section>
 
       {recipe.description ? (
-        <section className="hidden lg:block container mx-auto text-center italic text-lg text-slate-500">
+        <blockquote className="hidden md:block container mx-auto text-center italic text-lg text-slate-500">
           <ReactMarkdown components={renderers}>{recipe.description}</ReactMarkdown>
-        </section>
+        </blockquote>
       ) : null}
 
       <section className="container mx-auto px-4 sm:px-0 bg-white flex flex-col sm:flex-row gap-4">
 
         <div className="sm:w-1/2 xl:w-5/12">
-          <div className="p-2 text-lg uppercase bg-slate-100 text-slate-600">
+          <h2 className="text-primary-600">
             Ingredienser
-          </div>
+          </h2>
           <ReactMarkdown components={renderers}>{recipe.ingredients}</ReactMarkdown>
         </div>
 
         <div className="sm:w-1/2 xl:w-7/12">
-          <div className="p-2 text-lg uppercase bg-slate-100 text-slate-600">
+          <h2 className="text-primary-600">
             Fremgangsmåte
-          </div>
+          </h2>
           <ReactMarkdown components={renderers}>{recipe.steps}</ReactMarkdown>
         </div>
       </section>

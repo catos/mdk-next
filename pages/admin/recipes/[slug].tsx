@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import { getRecipe, IRecipe, saveRecipe } from "../../../firebase/recipe-service"
 import useForm from "lib/use-form";
 import { Button, Form, Input } from "components/ui";
-import TextArea from "components/ui/text-area";
+import {TextArea} from "components/ui";
 import { getSlugId } from "lib/get-slug-id";
 import slugify from "lib/slugify";
 

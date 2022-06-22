@@ -8,7 +8,7 @@ import Timer from "components/recipe/timer"
 const renderers = {
   h1: (props: any) => {
     return (
-      <h3 className="text-sm uppercase text-slate-500 pb-0 pt-4">
+      <h3 className="text-primary-400 pb-0 pt-4">
         {props.children}
       </h3>
     )

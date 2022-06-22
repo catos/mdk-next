@@ -28,7 +28,7 @@ const ListItem: React.FC<IListItemProps> = ({ index, children }) => {
       <label
         htmlFor={id}
         className={clsx(
-          "p-3 text-base inline-block cursor-pointer whitespace-normal flex-grow",
+          "p-2 text-base inline-block cursor-pointer whitespace-normal flex-grow",
           checked ? "text-slate-500" : "inherit"
         )}
       >
