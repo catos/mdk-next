@@ -5,6 +5,7 @@ import { getRecipe, IRecipe } from "../../firebase/recipe-service"
 import renderers from "lib/renderers"
 import { Link } from "components/ui"
 import { getSlugId } from "lib/get-slug-id"
+import slugify from "lib/slugify"
 
 type RecipesProps = {
   recipe: IRecipe | null
@@ -29,7 +30,7 @@ export default function Recipes(props: RecipesProps) {
         <div className="container mx-auto flex flex-col bg-white gap-4">
           <div className="relative">
             {/* TODO: only show for admins */}
-            <Link href={`/admin/recipes/${recipe.id}`} className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
+            <Link href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`} className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
               {/* <PencilAltIcon className="w-5 h-5" /> */}
               E
             </Link>

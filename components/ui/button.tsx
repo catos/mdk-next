@@ -1,13 +1,15 @@
 import styles from "./button.module.css"
+import Link from "./link"
 
 type ButtonProps = {
   color?: "primary" | "secondary" | "disabled"
   className?: string
   rounded?: boolean
+  href?: string
   children: React.ReactNode
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export default function Button({ color = "primary", className, rounded = false, disabled, ...rest }: ButtonProps) {
+export default function Button({ color = "primary", className, rounded = false, href = "", disabled, ...rest }: ButtonProps) {
 
   if (disabled) {
     color = "disabled"
@@ -20,8 +22,7 @@ export default function Button({ color = "primary", className, rounded = false, 
     className
   ]
 
-  return (
-    <button className={classes.join(" ")} disabled={disabled} {...rest} />
-    // <button className="bg-primary-600 p-4 rounded-md rounded-full" {...rest} />
-  )
+  return href 
+    ? <Link href={href} className={classes.join(" ")} {...rest} />
+    : <button className={classes.join(" ")} disabled={disabled} {...rest} />
 }

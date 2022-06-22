@@ -3,6 +3,8 @@ import { getRecipe, IRecipe, saveRecipe } from "../../../firebase/recipe-service
 import useForm from "lib/use-form";
 import { Button, Form, Input } from "components/ui";
 import TextArea from "components/ui/text-area";
+import { getSlugId } from "lib/get-slug-id";
+import slugify from "lib/slugify";
 
 interface IProps {
   recipe: IRecipe
@@ -13,9 +15,7 @@ export default function Page({ recipe }: IProps) {
   const { values, handleSubmit, handleChange } = useForm(
     recipe,
     async (values: IRecipe) => {
-      console.log("save");
-      
-      // await saveRecipe(values)
+      await saveRecipe(values)
     }
   )
 
@@ -23,7 +23,7 @@ export default function Page({ recipe }: IProps) {
     <Form onSubmit={handleSubmit}>
       <div className="fixed bottom-2 right-2 flex flex-col gap-2">
         <Button color="primary" type="submit" rounded>S</Button>
-        <Button color="secondary" type="submit" rounded>R</Button>
+        <Button color="secondary" href={`/oppskrifter/${slugify(values?.name ?? "")}-${values?.id}`} rounded>R</Button>
       </div>
       <Input name="type" type="number" onChange={handleChange} value={values?.type} />
       <Input name="created" type="date" onChange={handleChange} value={values?.created} />
@@ -38,9 +38,8 @@ export default function Page({ recipe }: IProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  console.log(query);
-  const id = Array.isArray(query.id) ? query.id.join("") : query.id
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const id = getSlugId(params?.slug)
 
   if (!id) {
     return {
