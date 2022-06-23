@@ -8,8 +8,8 @@ export type ChangeEventType = HTMLInputElement | { name?: string; value: any }
 /**
  * TODO: remove | undefined (check login)
  */
-function useForm<T>(initialValues: T | undefined, onSubmit: OnSubmitType) {
-  const [values, setValues] = React.useState<T | undefined>(initialValues)
+function useForm<T>(initialValues: T, onSubmit: OnSubmitType) {
+  const [values, setValues] = React.useState<T>(initialValues)
   const [errors] = React.useState({})
 
   // TODO: why telerik !?!? const formRendered = React.useRef(true)

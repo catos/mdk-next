@@ -1,15 +1,17 @@
 import { GetServerSideProps } from "next"
 import { getRecipes, IRecipe } from "../../../firebase/recipe-service"
-import { Button, Link, Table, TD, TR } from "components/ui"
+import { Link, Table, TD, TR } from "components/ui"
 import slugify from "lib/slugify"
 import React from "react"
 import { fromMillis } from "../../../firebase/firebase"
+import { format } from "date-fns"
+import { useInfiniteScroll } from "hooks/use-intersection"
 
 interface IProps {
   recipes: IRecipe[]
 }
 
-const TAKE = 10
+const TAKE = 1
 
 export default function Recipes(props: IProps) {
   const [recipes, setRecipes] = React.useState(props.recipes)
@@ -17,11 +19,10 @@ export default function Recipes(props: IProps) {
   const [end, setEnd] = React.useState(false)
 
   const loadMoreRecipes = async () => {
+    console.log("useEffect->loadMore", loading);
     setLoading(true)
     const last = recipes[recipes.length - 1]
     const cursor = typeof last.created === "number" ? fromMillis(last.created) : last.created
-    console.log(last, last.created, fromMillis(last.created), typeof last.created);
-    
 
     const newRecipes = await getRecipes(TAKE, cursor)
     setRecipes(recipes.concat(newRecipes))
@@ -32,17 +33,28 @@ export default function Recipes(props: IProps) {
     }
   }
 
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const [isIntersecting] = useInfiniteScroll(ref, async () => {
+    if (!loading && !end) {
+      await loadMoreRecipes()
+    }
+  })
+
   return (
     <div>
       <Link href="/admin/recipes">Admin recipes list</Link>
-
+      <div className="fixed top-16 right-2 p-4 bg-white">
+        <div>Count: {recipes.length}</div>
+        <div>Loading: {loading.toString()}</div>
+        <div>End: {end.toString()}</div>
+      </div>
       <Table>
         <thead>
           <TR>
             <th>Name</th>
             <th>Type</th>
             <th>Created</th>
-            <th>Created Millis</th>
+            <th>Published</th>
           </TR>
         </thead>
         <tbody>
@@ -50,15 +62,16 @@ export default function Recipes(props: IProps) {
             <TR key={recipe.id}>
               <TD><Link href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`}>{recipe.name}</Link></TD>
               <TD>{recipe.type}</TD>
-              <TD>{recipe.created}</TD>
-              <TD>{new Date(recipe.created).toString()}</TD>
+              <TD>{format(recipe.created, "yyyy-MM-dd")}</TD>
+              <TD>{recipe.published}</TD>
             </TR>
           )}
         </tbody>
       </Table>
 
-      {/* TODO: useScrollSpy to replace button */}
-      {(!loading && !end && <Button onClick={loadMoreRecipes}>Load more</Button>)}
+      <div className="bg-red-300 flex h-64 justify-center" ref={ref}>
+        Load more div... {isIntersecting && 'Im in viewport!'}
+      </div>
 
       <Loader show={loading} />
 
@@ -96,6 +109,7 @@ function getQueryPageNumber(query: string | string[] | undefined) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const TAKE = 5
   const page = getQueryPageNumber(query.page)
   const skip = page * TAKE
 

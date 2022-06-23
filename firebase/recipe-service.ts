@@ -17,8 +17,8 @@ import { db } from "./firebase"
 export interface IRecipe {
   id: string
   slug: string
-  // TODO: published: boolean,
   created: number
+  published?: number
   description: string
   ingredients: string
   steps: string
@@ -30,6 +30,21 @@ export interface IRecipe {
   type: number
 }
 
+export const defaultRecipe: IRecipe = {
+  id: "",
+  slug: "",
+  created: Date.now(),
+  published: undefined,
+  description: "",
+  ingredients: "",
+  steps: "",
+  name: "",
+  source: "",
+  image: "",
+  tags: [],
+  time: -1,
+  type: 1,
+}
 
 // https://stackoverflow.com/a/69036032
 export async function getRecipes(take = 10, last?: any) {
@@ -59,23 +74,24 @@ export async function getRecipes(take = 10, last?: any) {
       created: data.created.toMillis() || 0,
     } as IRecipe
   })
-
+  
   return recipes
 }
 
 export async function getRecipe(id: string, rendered = true) {
   const ref = doc(db, "recipes", id)
   const snap = await getDoc(ref)
-
+  
   if (!snap.exists()) {
     return null
   }
-
-  const dbRecipe = snap.data()
+  
+  const data = snap.data()
   
   return {
     id: snap.id,
-    ...dbRecipe,
+    ...data,
+    created: data.created.toMillis() || 0,
   } as IRecipe
 
 }

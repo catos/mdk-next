@@ -25,6 +25,6 @@ interface TDProps extends React.HTMLAttributes<HTMLTableCellElement> {
 
 export function TD(props: TDProps) {
   return (
-    <td className="p-2" {...props} />
+    <td className="px-2 py-24" {...props} />
   )
 }
