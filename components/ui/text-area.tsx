@@ -20,7 +20,7 @@ export default function TextArea({ name, label = true, rows = 10, ...rest }: Tex
         {_label}
       </label> : null}
       <textarea
-        className="focus:ring-indigo-500 focus:border-indigo-500 w-full px-4 py-3 border-gray-300 rounded-md"
+        className="focus:ring-indigo-500 focus:border-indigo-500 w-full px-4 py-3 border-gray-300 rounded-md bg-slate-100"
         id={name}
         name={name}
         rows={focus ? rows : 1}

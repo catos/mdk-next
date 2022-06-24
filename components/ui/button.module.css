@@ -9,6 +9,14 @@
   focus:outline-none focus:ring-2
 }
 
+.color-default {
+  @apply  
+    text-white 
+    bg-slate-200 
+    hover:bg-slate-300 
+    focus:ring-slate-700;
+}
+
 .color-primary {
   @apply  
     text-white 

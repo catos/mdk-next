@@ -10,7 +10,7 @@ type Props = {
 
 export default function Layout({ user, children }: Props) {
   return (
-    <div className="pt-16 overflow-hidden bg-slate-100">
+    <div className="pt-16 overflow-hidden">
       <Head>
         <title>MDK</title>
         <meta name="description" content="Min Digitale Kokebok" />
