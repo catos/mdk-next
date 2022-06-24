@@ -1,8 +1,8 @@
 // https://github.com/streamich/react-use/blob/master/src/useIntersection.ts
 
-import React, { RefObject, useEffect, useState } from "react"
+import { RefObject, useEffect, useState } from "react"
 
-export const useInfiniteScroll = (
+export const useIntersection = (
   ref: RefObject<HTMLElement>,
   callback: () => void
 ) => {
@@ -11,7 +11,6 @@ export const useInfiniteScroll = (
   useEffect(() => {
     if (ref.current && typeof IntersectionObserver === 'function') {
       const options = {
-        // root: document.querySelector('#scroll-area'),
         rootMargin: "0px",
         threshold: 1.0,
       }

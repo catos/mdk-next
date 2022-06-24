@@ -3,9 +3,8 @@ import { getRecipes, IRecipe } from "../../../firebase/recipe-service"
 import { Link, Table, TD, TR } from "components/ui"
 import slugify from "lib/slugify"
 import React from "react"
-import { fromMillis } from "../../../firebase/firebase"
 import { format } from "date-fns"
-import { useInfiniteScroll } from "hooks/use-intersection"
+import { useInfiniteRecipes } from "hooks/use-infinite-recipes"
 
 interface IProps {
   recipes: IRecipe[]
@@ -14,31 +13,8 @@ interface IProps {
 const TAKE = 1
 
 export default function Recipes(props: IProps) {
-  const [recipes, setRecipes] = React.useState(props.recipes)
-  const [loading, setLoading] = React.useState(false)
-  const [end, setEnd] = React.useState(false)
-
-  const loadMoreRecipes = async () => {
-    console.log("useEffect->loadMore", loading);
-    setLoading(true)
-    const last = recipes[recipes.length - 1]
-    const cursor = typeof last.created === "number" ? fromMillis(last.created) : last.created
-
-    const newRecipes = await getRecipes(TAKE, cursor)
-    setRecipes(recipes.concat(newRecipes))
-    setLoading(false)
-
-    if (newRecipes.length < TAKE) {
-      setEnd(true);
-    }
-  }
-
-  const ref = React.useRef<HTMLDivElement | null>(null);
-  const [isIntersecting] = useInfiniteScroll(ref, async () => {
-    if (!loading && !end) {
-      await loadMoreRecipes()
-    }
-  })
+  const ref = React.useRef<HTMLDivElement | null>(null)
+  const { recipes, loading, end, isIntersecting } = useInfiniteRecipes(props.recipes, ref)
 
   return (
     <div>
@@ -79,6 +55,7 @@ export default function Recipes(props: IProps) {
     </div>
   )
 }
+
 
 // TODO: move to shared component ?
 interface ILoaderProps {
