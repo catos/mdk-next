@@ -16,7 +16,7 @@ export default function TextArea({ name, label = true, rows = 10, ...rest }: Tex
 
   return (
     <div>
-      {_label ? <label className="block font-medium text-gray-700" htmlFor={name}>
+      {_label ? <label className="block text-xs uppercase font-medium text-gray-500 tracking-wide" htmlFor={name}>
         {_label}
       </label> : null}
       <textarea

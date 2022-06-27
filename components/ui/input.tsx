@@ -14,9 +14,13 @@ export default function Input({ name, label = true, ...rest }: InputProps) {
 
   return (
     <div>
-      {_label ? <label className="block font-medium text-gray-700" htmlFor={name}>
-        {_label}
-      </label> : null}
+      {_label
+        ? <label
+          className="block text-xs uppercase font-medium text-gray-500 tracking-wide"
+          htmlFor={name}>
+          {_label}
+        </label>
+        : null}
       <input
         className="
           focus:ring-indigo-500 
