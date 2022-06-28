@@ -93,7 +93,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       recipes,
-      revalidate: 600
     }
   }
 }

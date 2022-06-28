@@ -18,7 +18,7 @@ import { db } from "./firebase"
 export interface IRecipe {
   id: string
   slug: string
-  created: string
+  created: any
   published?: number
   description: string
   ingredients: string
@@ -48,58 +48,45 @@ export const defaultRecipe: IRecipe = {
 }
 
 // https://stackoverflow.com/a/69036032
-export async function getRecipes(take = 10, last?: any) {
+export async function getRecipes(take = 10, afterId?: string) {
   const ref = collection(db, "recipes")
 
-  const constraints = []
-
-  if (last) constraints.push(startAfter(last))
-
-  const q = query(
-    ref,
-    where("type", "==" , 1),
+  const constraints = [
+    where("type", "==", 1),
     // TODO: where("published", "==" , true)
     orderBy("created", "desc"),
-    ...constraints,
-    limit(take),
-  )
-   
+  ]
+
+  if (afterId) {
+    const snap = await getDoc(doc(db, "recipes", afterId))
+    constraints.push(startAfter(snap))
+  }
+  if (take) constraints.push(limit(take))
+
+  const q = query(ref, ...constraints)
+
   const snapshot = await getDocs(q)
+  // TODO: replace id with slug
+  // slug: slugify(data.name),
   const recipes = snapshot.docs.map((doc) => {
-    // TODO: replace id with slug
-    const data = doc.data()
-    
-    return {
-      id: doc.id,
-      // slug: slugify(data.name),
-      ...data,
-      created: JSON.stringify(data.created),
-    } as IRecipe
+    return { id: doc.id, ...doc.data() } as IRecipe
   })
-  
+
   return recipes
 }
 
 export async function getRecipe(id: string, rendered = true) {
   const ref = doc(db, "recipes", id)
   const snap = await getDoc(ref)
-  
+
   if (!snap.exists()) {
     return null
   }
-  
-  const data = snap.data()
-  
-  return {
-    id: snap.id,
-    ...data,
-    // created: data.created.toMillis() || 0,
-    created: JSON.stringify(data.created),
-  } as IRecipe
 
+  return { id: snap.id, ...snap.data() } as IRecipe
 }
 
 export async function saveRecipe(recipe: IRecipe) {
-  const ref = doc(db, "recipes", recipe.id)  
+  const ref = doc(db, "recipes", recipe.id)
   await setDoc(ref, recipe)
 }

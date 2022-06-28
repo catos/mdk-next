@@ -1,5 +1,4 @@
 import { getRecipes, IRecipe } from "../firebase/recipe-service"
-import { fromMillis } from "../firebase/firebase"
 import React, { RefObject } from "react"
 import { useIntersection } from "hooks/use-intersection"
 
@@ -11,9 +10,8 @@ export function useInfiniteRecipes(initialRecipes: IRecipe[], ref: RefObject<HTM
   const loadMoreRecipes = async () => {
     setLoading(true)
     const last = recipes[recipes.length - 1]
-    const cursor = typeof last.created === "number" ? fromMillis(last.created) : last.created
 
-    const newRecipes = await getRecipes(take, cursor)
+    const newRecipes = await getRecipes(take, last.id)
     setRecipes(recipes.concat(newRecipes))
     setLoading(false)
 
