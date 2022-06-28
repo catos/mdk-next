@@ -16,14 +16,9 @@ export default function Page({ recipe }: IProps) {
   const { values, handleSubmit, handleChange } = useForm<IRecipe>(
     recipe ?? defaultRecipe,
     async (values: IRecipe) => {
-      console.log(values);
-      
-      // await saveRecipe(values)
+      await saveRecipe(values)
     }
   )
-
-  console.log(recipe);
-
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -33,7 +28,8 @@ export default function Page({ recipe }: IProps) {
         <Button color="secondary" href={`/oppskrifter/${slugify(values.name ?? "")}-${values.id}`} rounded>R</Button>
       </div>
       <Input name="type" type="number" onChange={handleChange} value={values.type} />
-      <Input name="created" type="date" onChange={handleChange} value={format(values.created, "yyyy-MM-dd")} />
+      {/* <Input name="created" type="date" onChange={handleChange} value={format(values.created, "yyyy-MM-dd")} /> */}
+      <Input name="created" type="string" onChange={handleChange} value={values.created.toString()} />
       <Input name="name" onChange={handleChange} value={values.name} />
       <Input name="image" onChange={handleChange} value={values.image} />
       <Input name="source" onChange={handleChange} value={values.source} />

@@ -9,6 +9,7 @@ import {
   setDoc,
   startAfter,
   startAt,
+  Timestamp,
   where,
 } from "firebase/firestore"
 import slugify from "lib/slugify"
@@ -17,7 +18,7 @@ import { db } from "./firebase"
 export interface IRecipe {
   id: string
   slug: string
-  created: number
+  created: string
   published?: number
   description: string
   ingredients: string
@@ -33,7 +34,7 @@ export interface IRecipe {
 export const defaultRecipe: IRecipe = {
   id: "",
   slug: "",
-  created: Date.now(),
+  created: new Date().toString(),
   published: undefined,
   description: "",
   ingredients: "",
@@ -67,11 +68,12 @@ export async function getRecipes(take = 10, last?: any) {
   const recipes = snapshot.docs.map((doc) => {
     // TODO: replace id with slug
     const data = doc.data()
+    
     return {
       id: doc.id,
       // slug: slugify(data.name),
       ...data,
-      created: data.created.toMillis() || 0,
+      created: JSON.stringify(data.created),
     } as IRecipe
   })
   
@@ -91,7 +93,8 @@ export async function getRecipe(id: string, rendered = true) {
   return {
     id: snap.id,
     ...data,
-    created: data.created.toMillis() || 0,
+    // created: data.created.toMillis() || 0,
+    created: JSON.stringify(data.created),
   } as IRecipe
 
 }

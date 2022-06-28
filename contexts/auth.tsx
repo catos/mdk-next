@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential, updateProfile as fbUpdateProfile } from "firebase/auth"
-import React from "react"
+import React, { ReactNode } from "react"
 import { auth } from "../firebase/firebase"
 
 export interface IUser {
@@ -29,7 +29,11 @@ const initialUser = {
 
 const AuthContext = React.createContext({} as IAuthContext)
 
-export const AuthProvider: React.FC = (props) => {
+interface IAuthProviderProps {
+  children: ReactNode
+}
+
+export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(true)
   const [user, setUser] = React.useState<IUser>(initialUser)
 

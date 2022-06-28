@@ -25,8 +25,6 @@ export default function Login() {
       login(values.username, values.password)
         .then(() => {
           router.push("/")
-          console.log("redirect to prev-url || /");
-
         })
         .catch((error: any) => {
           const wrongUsernameOrPassword = [

@@ -14,7 +14,6 @@ function useForm<T>(initialValues: T, onSubmit: OnSubmitType) {
 
   // TODO: why telerik !?!? const formRendered = React.useRef(true)
   React.useEffect(() => {
-    // console.log("setValues", initialValues)
     setValues(initialValues)
     // formRendered.current = false
   }, [initialValues])

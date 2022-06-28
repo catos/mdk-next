@@ -9,10 +9,8 @@ export default function Dropdown() {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
-  console.log(ref.current);
-  
-
-
+  // TODO: anchor popover to ref position
+  // console.log(ref.current);
 
   return (
     <div className="relative">

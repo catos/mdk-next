@@ -3,7 +3,6 @@ import { getRecipes, IRecipe } from "../../../firebase/recipe-service"
 import { Link, Table, TD, TR } from "components/ui"
 import slugify from "lib/slugify"
 import React from "react"
-import { format } from "date-fns"
 import { useInfiniteRecipes } from "hooks/use-infinite-recipes"
 
 interface IProps {
@@ -38,7 +37,7 @@ export default function Recipes(props: IProps) {
             <TR key={recipe.id}>
               <TD><Link href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`}>{recipe.name}</Link></TD>
               <TD>{recipe.type}</TD>
-              <TD>{format(recipe.created, "yyyy-MM-dd")}</TD>
+              <TD>{recipe.created.toString()}</TD>
               <TD>{recipe.published}</TD>
             </TR>
           )}
@@ -89,8 +88,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const TAKE = 5
   const page = getQueryPageNumber(query.page)
   const skip = page * TAKE
-
-  console.log("Skip: ", skip, ", TAKE: ", TAKE, ", page: ", page);
 
   const recipes = await getRecipes(TAKE)
   return {

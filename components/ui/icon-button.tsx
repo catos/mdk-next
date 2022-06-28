@@ -9,7 +9,7 @@ type ButtonProps = {
   children: React.ReactNode
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export default forwardRef<HTMLButtonElement, ButtonProps>(
+const IconButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ color = "default", className, disabled, ...rest }, ref) => (
     <button
       className={clsx(styles.button, styles[`color-${disabled ? "disabled" : color}`], className)}
@@ -17,3 +17,7 @@ export default forwardRef<HTMLButtonElement, ButtonProps>(
       {...rest} />
   )
 )
+
+IconButton.displayName = "IconButton"
+
+export default IconButton
