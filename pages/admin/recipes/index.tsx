@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next"
-import { getRecipes, IRecipe } from "../../../firebase/recipe-service"
+import { getRecipes, IRecipe } from "../../../data/recipe-service"
 import { Link, Table, TD, TR } from "components/ui"
 import slugify from "lib/slugify"
 import React from "react"

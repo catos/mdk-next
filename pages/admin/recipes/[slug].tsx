@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next"
-import { defaultRecipe, getRecipe, IRecipe, saveRecipe } from "../../../firebase/recipe-service"
+import { defaultRecipe, getRecipe, IRecipe, saveRecipe } from "../../../data/recipe-service"
 import useForm from "lib/use-form";
 import { Button, Form, Input } from "components/ui";
 import { TextArea } from "components/ui";

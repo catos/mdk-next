@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next"
 import RecipeCard from "components/recipe/card"
-import { getRecipes, IRecipe } from "../../firebase/recipe-service"
+import { getRecipes, IRecipe } from "data/recipe-service"
 import { useRef } from "react"
 import { useInfiniteRecipes } from "hooks/use-infinite-recipes"
 

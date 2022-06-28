@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import ReactMarkdown from "react-markdown"
-import { getRecipe, IRecipe } from "../../firebase/recipe-service"
+import { getRecipe, IRecipe } from "../../data/recipe-service"
 import renderers from "lib/renderers"
 import { Link } from "components/ui"
 import { getSlugId } from "lib/get-slug-id"

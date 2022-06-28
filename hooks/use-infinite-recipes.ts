@@ -1,4 +1,4 @@
-import { getRecipes, IRecipe } from "../firebase/recipe-service"
+import { getRecipes, IRecipe } from "../data/recipe-service"
 import React, { RefObject } from "react"
 import { useIntersection } from "hooks/use-intersection"
 

@@ -8,11 +8,8 @@ import {
   query,
   setDoc,
   startAfter,
-  startAt,
-  Timestamp,
   where,
 } from "firebase/firestore"
-import slugify from "lib/slugify"
 import { db } from "./firebase"
 
 export interface IRecipe {
@@ -66,8 +63,6 @@ export async function getRecipes(take = 10, afterId?: string) {
   const q = query(ref, ...constraints)
 
   const snapshot = await getDocs(q)
-  // TODO: replace id with slug
-  // slug: slugify(data.name),
   const recipes = snapshot.docs.map((doc) => {
     return { id: doc.id, ...doc.data() } as IRecipe
   })

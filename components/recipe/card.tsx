@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { IRecipe } from "firebase/recipe-service"
+import { IRecipe } from "data/recipe-service"
 import Link from "components/ui/link"
 import slugify from "lib/slugify"
 

@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential, updateProfile as fbUpdateProfile } from "firebase/auth"
 import React, { ReactNode } from "react"
-import { auth } from "../firebase/firebase"
+import { auth } from "../data/firebase"
 
 export interface IUser {
   id: string

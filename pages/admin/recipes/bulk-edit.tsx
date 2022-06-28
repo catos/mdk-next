@@ -1,4 +1,4 @@
-import { getRecipes, IRecipe, saveRecipe } from "../../../firebase/recipe-service"
+import { getRecipes, IRecipe, saveRecipe } from "../../../data/recipe-service"
 import { GetServerSideProps } from "next"
 
 interface IProps {
