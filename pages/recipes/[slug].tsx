@@ -97,17 +97,17 @@ export default function Recipes(props: RecipesProps) {
         </blockquote>
       ) : null}
 
-      <section className="container mx-auto px-4 sm:px-0 bg-white flex flex-col sm:flex-row gap-4">
+      <section className="container mx-auto sm:px-0 bg-white flex flex-col sm:flex-row gap-4">
 
         <div className="sm:w-1/2 xl:w-5/12">
-          <h2 className="text-primary-600">
+          <h2 className="text-primary-600 uppercase text-lg">
             Ingredienser
           </h2>
           <ReactMarkdown components={renderers}>{recipe.ingredients}</ReactMarkdown>
         </div>
 
         <div className="sm:w-1/2 xl:w-7/12">
-          <h2 className="text-primary-600">
+          <h2 className="text-primary-600 uppercase text-lg">
             Fremgangsmåte
           </h2>
           <ReactMarkdown components={renderers}>{recipe.steps}</ReactMarkdown>
