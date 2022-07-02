@@ -25,7 +25,7 @@ export default function Recipes(props: RecipesProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-4">
+    <div className="flex flex-col gap-4 bg-white">
       <section className="flex flex-col">
         <div className="relative">
           {/* TODO: only show for admins */}

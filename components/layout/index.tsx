@@ -17,7 +17,7 @@ export default function Layout({ user, children }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="py-4 px-4 min-h-[50vh] sm:px-0 container mx-auto">
+      <main className="p-4 min-h-[50vh] sm:px-0 container mx-auto">
         {children}
       </main>
       <Footer />
