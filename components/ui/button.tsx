@@ -1,28 +1,82 @@
-import styles from "./button.module.css"
+import clsx from "clsx"
 import Link from "./link"
 
-type ButtonProps = {
-  color?: "primary" | "secondary" | "default" | "disabled"
+type ColorTypes = "default" | "primary" | "secondary" | "disabled"
+const colorStyle: { [key in ColorTypes]: string } = {
+  default: "bg-none hover:brightness-90 focus:ring-slate-700",
+  primary: "bg-primary-700 hover:brightness-90 focus:ring-primary-700",
+  secondary: "bg-secondary-500 hover:brightness-90 focus:ring-secondary-500",
+  disabled: "bg-gray-400 hover:brightness-90 focus:ring-slate-700",
+}
+
+type SizeTypes = "small" | "default" | "large"
+const sizeStyle: { [key in SizeTypes]: string } = {
+  small: "w-8 h-8",
+  default: "w-10 h-10",
+  large: "w-12 h-12",
+}
+
+export type ButtonProps = {
+  color?: ColorTypes
+  size?: SizeTypes
   className?: string
   rounded?: boolean
   href?: string
-  children: React.ReactNode
+  icon?: React.ReactNode | undefined
+  children?: React.ReactNode
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export default function Button({ color = "default", className, rounded = false, href = "", disabled, ...rest }: ButtonProps) {
-
+export default function Button({
+  color = "default",
+  size = "default",
+  className,
+  href = "",
+  icon = undefined,
+  disabled,
+  ...rest
+}: ButtonProps) {
   if (disabled) {
     color = "disabled"
   }
 
-  const classes = [
-    styles.button,
-    rounded ? "rounded-full" : "rounded-lg",
-    styles[`color-${color}`],
-    className
-  ]
+  const textColor = color === "default" ? "text-black" : "text-white"
 
-  return href 
-    ? <Link href={href} className={classes.join(" ")} {...rest} />
-    : <button className={classes.join(" ")} disabled={disabled} {...rest} />
+  const children = icon ? (
+    <>
+      {rest.children}
+      {icon}
+    </>
+  ) : (
+    rest.children
+  )
+
+  const _size = icon ? sizeStyle[size] : undefined
+  
+  const rounded = rest.rounded ?? icon ? true : false
+
+  const padding = icon ? rounded ? "p-3" : "p-2" : "px-4 p-3"
+  
+  const classes = clsx(
+    "cursor-pointer text-sm font-bold uppercase tracking-wider transition ease-linear duration-200 hover:backdrop-brightness-90 hover:drop-shadow-lg hover:no-underline focus:outline-none focus:ring-2",
+    padding,
+    textColor,
+    colorStyle[disabled ? "disabled" : color],
+    _size,
+    { "rounded-full": rounded },
+    className
+  )
+
+  return href ? (
+    <Link href={href} className={classes}>
+      {children}
+    </Link>
+  ) : (
+    <button className={classes} disabled={disabled} {...rest}>
+      {children}
+    </button>
+  )
+}
+
+export function FAB(props: ButtonProps) {
+  return <Button className="shadow-md" {...props} />
 }

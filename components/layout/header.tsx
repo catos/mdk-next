@@ -5,7 +5,7 @@ import Dropdown from "./header-dropdown";
 
 export default function Header() {
   return (
-    <header className="fixed z-50 w-full top-0 flex flex-wrap items-center justify-between h-16 px-4 sm:p-0 bg-white shadow-lg">
+    <header className="fixed z-50 w-full top-0 flex flex-wrap items-center justify-between h-16 px-4 bg-white shadow-lg">
       <nav aria-label="Main navigation" className="container mx-auto flex items-center">
         <Link href="/" className="flex items-center">
           <Logo className="w-8 h-8" />

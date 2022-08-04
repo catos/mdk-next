@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
-import Logo from "components/logo";
-import { Button, Input, Link } from "components/ui";
-import useAuth from "contexts/auth";
-import useForm from "lib/use-form";
+import { useRouter } from "next/router"
+import Logo from "components/logo"
+import { Button, Form, Input, Link } from "components/ui"
+import useAuth from "contexts/auth"
+import useForm from "lib/use-form"
 
 interface IForm {
   username: string
@@ -33,12 +33,10 @@ export default function Login() {
           ]
           if (wrongUsernameOrPassword.includes(error.code)) {
             // notify("Wrong username or password")
-            console.log("Wrong username or password");
-
+            console.log("Wrong username or password")
           } else {
             // notify(`Error: ${error.message}`)
-            console.log(`Error: ${error.message}`);
-
+            console.log(`Error: ${error.message}`)
           }
         })
     }
@@ -57,14 +55,31 @@ export default function Login() {
           for å kunne ta i bruke alle funksjoner
         </p>
       </div>
-      <form onSubmit={handleSubmit} method="post" className="flex flex-col gap-8 p-10 bg-white rounded-lg sm:shadow-md">
-        <Input name="username" label="E-post" type="email" onChange={handleChange} value={values?.username} />
-        <Input name="password" label="Passord" type="password" onChange={handleChange} value={values?.password} />
+      <Form
+        onSubmit={handleSubmit}
+        method="post"
+        className="gap-8"
+        // className="flex flex-col p-10 bg-white rounded-lg sm:shadow-md"
+      >
+        <Input
+          name="username"
+          label="E-post"
+          type="email"
+          onChange={handleChange}
+          value={values?.username}
+        />
+        <Input
+          name="password"
+          label="Passord"
+          type="password"
+          onChange={handleChange}
+          value={values?.password}
+        />
 
         <Button color="primary" type="submit">
           {loading ? "Logger inn..." : "Logg inn"}
         </Button>
-      </form>
+      </Form>
     </div>
   )
 }

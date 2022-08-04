@@ -3,9 +3,10 @@ import { useRouter } from "next/router"
 import ReactMarkdown from "react-markdown"
 import { getRecipe, IRecipe } from "../../data/recipe-service"
 import renderers from "lib/renderers"
-import { Link } from "components/ui"
+import { FAB } from "components/ui"
 import { getSlugId } from "lib/get-slug-id"
 import slugify from "lib/slugify"
+import { FiEdit2 } from "react-icons/fi"
 
 type RecipesProps = {
   recipe: IRecipe | null
@@ -29,12 +30,16 @@ export default function Recipes(props: RecipesProps) {
       <section className="flex flex-col">
         <div className="relative">
           {/* TODO: only show for admins */}
-          <Link href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`} className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white w-10 h-10 flex items-center justify-center rounded-full">
-            {/* <PencilAltIcon className="w-5 h-5" /> */}
-            E
-          </Link>
+          <FAB
+            color="primary"
+            icon={<FiEdit2 size="100%" />}
+            href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`}
+            className="absolute top-4 right-4 z-10"
+          />
+
           {/* <RecipeMetrics recipe={recipe} /> */}
           {recipe.image && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               className="object-cover w-full h-[33vh]"
               src={recipe.image}
@@ -93,31 +98,28 @@ export default function Recipes(props: RecipesProps) {
 
       {recipe.description ? (
         <blockquote className="hidden md:block container mx-auto text-center italic text-lg text-slate-500">
-          <ReactMarkdown components={renderers}>{recipe.description}</ReactMarkdown>
+          <ReactMarkdown components={renderers}>
+            {recipe.description}
+          </ReactMarkdown>
         </blockquote>
       ) : null}
 
       <section className="container mx-auto sm:px-0 bg-white flex flex-col sm:flex-row gap-4">
-
         <div className="sm:w-1/2 xl:w-5/12">
-          <h2 className="text-primary-600 uppercase text-lg">
-            Ingredienser
-          </h2>
-          <ReactMarkdown components={renderers}>{recipe.ingredients}</ReactMarkdown>
+          <h2 className="text-primary-600 uppercase text-lg">Ingredienser</h2>
+          <ReactMarkdown components={renderers}>
+            {recipe.ingredients}
+          </ReactMarkdown>
         </div>
 
         <div className="sm:w-1/2 xl:w-7/12">
-          <h2 className="text-primary-600 uppercase text-lg">
-            Fremgangsmåte
-          </h2>
+          <h2 className="text-primary-600 uppercase text-lg">Fremgangsmåte</h2>
           <ReactMarkdown components={renderers}>{recipe.steps}</ReactMarkdown>
         </div>
       </section>
     </div>
   )
 }
-
-
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
@@ -126,8 +128,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     if (!id) {
       return {
         props: {
-          notFound: true
-        }
+          notFound: true,
+        },
       }
     }
 
@@ -136,11 +138,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
       props: {
         recipe,
-        revalidate: 60
-      }
+        revalidate: 60,
+      },
     }
   } catch (error) {
-    console.log(error);
+    console.log(error)
     throw error
   }
 }
@@ -148,6 +150,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true
+    fallback: true,
   }
 }
