@@ -4,13 +4,15 @@ import { DOMAttributes } from "react"
 
 type LinkProps = {
   href: string
+  color?: string
   className?: string
   children: React.ReactNode | string
 } & DOMAttributes<HTMLAnchorElement>
 
-export default function Link({ href, className, children, ...rest }: LinkProps) {
+export default function Link({ href, color = "text-primary-600", className, children, ...rest }: LinkProps) {
   const classes = clsx(
-    "text-primary-600 hover:underline",
+    color,
+    "hover:underline",
     className
   )
   

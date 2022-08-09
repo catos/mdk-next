@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import ReactMarkdown from "react-markdown"
 import { getRecipe, IRecipe } from "../../data/recipe-service"
 import renderers from "lib/renderers"
-import { FAB } from "components/ui"
+import { Button } from "components/ui"
 import { getSlugId } from "lib/get-slug-id"
 import slugify from "lib/slugify"
 import { FiEdit2 } from "react-icons/fi"
@@ -30,7 +30,7 @@ export default function Recipes(props: RecipesProps) {
       <section className="flex flex-col">
         <div className="relative">
           {/* TODO: only show for admins */}
-          <FAB
+          <Button
             color="primary"
             icon={<FiEdit2 size="100%" />}
             href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`}

@@ -6,7 +6,7 @@ import {
   saveRecipe,
 } from "../../../data/recipe-service"
 import useForm from "lib/use-form"
-import { FAB, Form, Input } from "components/ui"
+import { Button, Form, Input } from "components/ui"
 import { TextArea } from "components/ui"
 import { getSlugId } from "lib/get-slug-id"
 import slugify from "lib/slugify"
@@ -27,14 +27,14 @@ export default function Page({ recipe }: IProps) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <div className="fixed bottom-2 right-2 flex flex-col gap-2">
-        <FAB color="primary" icon={<FiSave size="100%" />} type="submit" />
-        <FAB
+      <div className="fixed bottom-4 right-4 flex flex-col gap-4">
+        <Button color="primary" icon={<FiSave size="100%" />} type="submit" />
+        <Button
           color="secondary"
           icon={<FiFileText size="100%" />}
           href={`/oppskrifter/${slugify(values.name ?? "")}-${values.id}`}
         />
-        <FAB
+        <Button
           color="secondary"
           icon={<FiList size="100%" />}
           href={`/admin/recipes`}

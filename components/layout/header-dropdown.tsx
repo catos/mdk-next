@@ -10,8 +10,7 @@ export default function Dropdown() {
   useEffect(() => {
 
     const handleClick = (event: any) => {
-      console.log(event.target);
-      
+      // console.log(event.target);      
     }
 
     document.addEventListener("click", handleClick, true)
@@ -25,14 +24,13 @@ export default function Dropdown() {
     <div className="relative">
       <Button
         icon={<FiMenu size="100%" />}
-        rounded={false}
         onClick={(_) => setOpen(!open)}
       />
 
       <Popover open={open}>
         <div
           className="z-50 bg-slate-900 fixed inset-0 opacity-30"
-          // onClick={(_) => setOpen(false)}
+          onClick={(_) => setOpen(false)}
         />
         <div className="z-50 fixed top-0 right-0 h-full bg-white shadow-lg pt-12 p-4 flex flex-col gap-4 w-3/4 md:w-96">
           <Button

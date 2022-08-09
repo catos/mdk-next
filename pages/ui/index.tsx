@@ -29,10 +29,16 @@ export default function Components() {
       </Section>
 
       <Section name="Misc">
-        <Button rounded color="primary" size="small">
-          Rounded
+        <Button href="#" color="default" size="small">
+          Link
         </Button>
         <Button href="#" color="primary" size="small">
+          Link
+        </Button>
+        <Button href="#" color="secondary" size="small">
+          Link
+        </Button>
+        <Button href="#" color="disabled" size="small">
           Link
         </Button>
       </Section>

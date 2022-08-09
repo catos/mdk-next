@@ -20,21 +20,23 @@ export type ButtonProps = {
   color?: ColorTypes
   size?: SizeTypes
   className?: string
-  rounded?: boolean
   href?: string
   icon?: React.ReactNode | undefined
   children?: React.ReactNode
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export default function Button({
-  color = "default",
-  size = "default",
-  className,
-  href = "",
-  icon = undefined,
-  disabled,
-  ...rest
-}: ButtonProps) {
+export default function Button(props: ButtonProps) {
+  const {
+    size = "default",
+    className,
+    href = "",
+    icon = undefined,
+    disabled,
+    ...rest
+  } = props
+
+  let { color = "default" } = props
+
   if (disabled) {
     color = "disabled"
   }
@@ -51,23 +53,22 @@ export default function Button({
   )
 
   const _size = icon ? sizeStyle[size] : undefined
-  
-  const rounded = rest.rounded ?? icon ? true : false
 
-  const padding = icon ? rounded ? "p-3" : "p-2" : "px-4 p-3"
-  
+  const padding = icon ? "p-2" : "px-4 p-3"
+
   const classes = clsx(
     "cursor-pointer text-sm font-bold uppercase tracking-wider transition ease-linear duration-200 hover:backdrop-brightness-90 hover:drop-shadow-lg hover:no-underline focus:outline-none focus:ring-2",
+    // { "border-2 border-slate-700": color === "default" },
     padding,
     textColor,
     colorStyle[disabled ? "disabled" : color],
     _size,
-    { "rounded-full": rounded },
     className
   )
 
+  // TODO: color-prop here is iffy...
   return href ? (
-    <Link href={href} className={classes}>
+    <Link href={href} color={color === "default" ? "text-primary-600" : "text-white"} className={classes}>
       {children}
     </Link>
   ) : (
@@ -75,8 +76,4 @@ export default function Button({
       {children}
     </button>
   )
-}
-
-export function FAB(props: ButtonProps) {
-  return <Button className="shadow-md" {...props} />
 }
