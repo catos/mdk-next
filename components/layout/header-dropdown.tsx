@@ -1,31 +1,32 @@
-import { DOMAttributes, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import useAuth from "contexts/auth"
 import { FiMenu, FiX } from "react-icons/fi"
 import { Button, Link, Popover } from "components/ui"
+import { useRouter } from "next/router"
 
 export default function Dropdown() {
   const { isAuthenticated, user, logout } = useAuth()
   const [open, setOpen] = useState(false)
 
+  // TODO: this is a weird way to close dropdown ?
+  const router = useRouter()
   useEffect(() => {
-
-    const handleClick = (event: any) => {
-      // console.log(event.target);      
+    const handleRouteChange = () => {
+      setOpen(false)
     }
 
-    document.addEventListener("click", handleClick, true)
+    router.events.on('routeChangeStart', handleRouteChange)
 
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
     return () => {
-      document.removeEventListener("click", handleClick, true)
+      router.events.off('routeChangeStart', handleRouteChange)
     }
-  }, [])
+  }, [router.events])
 
   return (
     <div className="relative">
-      <Button
-        icon={<FiMenu size="100%" />}
-        onClick={(_) => setOpen(!open)}
-      />
+      <Button icon={<FiMenu size="100%" />} onClick={(_) => setOpen(!open)} />
 
       <Popover open={open}>
         <div
@@ -55,22 +56,14 @@ export default function Dropdown() {
 
               <hr />
 
-              <ul>
-                <li>
-                  <Link href="/oppskrifter">Oppskrifter</Link>
-                </li>
-                <li>
-                  <Link href="/meny">Menyer</Link>
-                </li>
-                <li>
-                  <Link href="/favoritter">Favoritter</Link>
-                </li>
-              </ul>
+              <Link href="/oppskrifter">Oppskrifter</Link>
+              <Link href="/meny">Menyer</Link>
+              <Link href="/favoritter">Favoritter</Link>
 
               <hr />
 
-                <DropdownLink href="/admin/recipes" label="Recipes (admin)" />
-                <DropdownLink href="/ui" label="UI Components" />
+              <Link href="/admin/recipes">Recipes (admin)</Link>
+              <Link href="/ui">UI Components</Link>
 
               <hr />
 
@@ -84,18 +77,5 @@ export default function Dropdown() {
         </div>
       </Popover>
     </div>
-  )
-}
-
-type DropdownLinkProps = {
-  href: string
-  label: string
-} & DOMAttributes<HTMLAnchorElement>
-
-function DropdownLink({ href, label }: DropdownLinkProps) {
-  return (
-    <Button className="py-2 block text-primary-600" href={href}>
-      {label}
-    </Button>
   )
 }
