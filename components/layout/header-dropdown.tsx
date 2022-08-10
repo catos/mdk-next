@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react"
 import useAuth from "contexts/auth"
 import { FiMenu, FiX } from "react-icons/fi"
@@ -14,13 +15,9 @@ export default function Dropdown() {
     const handleRouteChange = () => {
       setOpen(false)
     }
-
-    router.events.on('routeChangeStart', handleRouteChange)
-
-    // If the component is unmounted, unsubscribe
-    // from the event with the `off` method:
+    router.events.on("routeChangeStart", handleRouteChange)
     return () => {
-      router.events.off('routeChangeStart', handleRouteChange)
+      router.events.off("routeChangeStart", handleRouteChange)
     }
   }, [router.events])
 
@@ -44,12 +41,13 @@ export default function Dropdown() {
           {isAuthenticated ? (
             <>
               <div className="flex flex-col items-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  className="rounded-full w-16 border border-slate-200"
-                  src={user.photoURL}
-                  alt={user.displayName}
-                />
+                {user.photoURL && (
+                  <img
+                    className="rounded-full w-16 border border-slate-200"
+                    src={user.photoURL}
+                    alt={user.displayName}
+                  />
+                )}
                 <strong>{user.displayName}</strong>
                 <div>{user.email}</div>
               </div>
@@ -60,10 +58,13 @@ export default function Dropdown() {
               <Link href="/meny">Menyer</Link>
               <Link href="/favoritter">Favoritter</Link>
 
-              <hr />
-
-              <Link href="/admin/recipes">Recipes (admin)</Link>
-              <Link href="/ui">UI Components</Link>
+              {user.isAdmin && (
+                <>
+                  <hr />
+                  <Link href="/admin/recipes">Recipes (admin)</Link>
+                  <Link href="/ui">UI Components</Link>
+                </>
+              )}
 
               <hr />
 

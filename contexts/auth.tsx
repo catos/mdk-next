@@ -1,3 +1,4 @@
+import { getAdmin } from "data/auth-service"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential, updateProfile as fbUpdateProfile } from "firebase/auth"
 import React, { ReactNode } from "react"
 import { auth } from "../data/firebase"
@@ -7,6 +8,7 @@ export interface IUser {
   email: string
   displayName: string
   photoURL: string
+  isAdmin: boolean
 }
 
 interface IAuthContext {
@@ -38,15 +40,20 @@ export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
   const [user, setUser] = React.useState<IUser>(initialUser)
 
   React.useEffect(() => {
-    auth.onAuthStateChanged((data: User | null) => {
+    auth.onAuthStateChanged(async (data: User | null) => {
+
+      const admin = await getAdmin(data?.uid)
+      
       const _user = data
         ? {
           id: data.uid,
           email: data.email ?? "",
           displayName: data.displayName ?? "",
           photoURL: data.photoURL ?? "",
+          isAdmin: Boolean(admin)
         }
         : initialUser
+
       setUser(_user)
       setIsAuthenticated(!!(_user && _user.email))
     })
