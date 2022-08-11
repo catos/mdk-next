@@ -6,26 +6,28 @@ import slugify from "lib/slugify"
 import { Button } from "components/ui"
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md"
 import useAuth from "contexts/auth"
-import { addFavorite } from "data/favorite-service"
+import { addFavorite, removeFavorite } from "data/favorite-service"
 import React from "react"
 
-interface IRecipeCard extends IRecipe {
-  isFavorite: boolean
+interface IRecipeCard {
+  recipe: IRecipe
 }
+
 // TODO: move images to firebase
-export default function RecipeCard({ recipe }: { recipe: IRecipeCard }) {
-  const { user, isAuthenticated } = useAuth()
+export default function RecipeCard({ recipe }: IRecipeCard) {
+  const { user } = useAuth()
 
   // TODO: create useRecipe-hook, for use here and in index...
-  const handleAddFavorite = async (event: any, recipeId: string) => {
+  const handleToggleFavorite = async (event: any, recipe: IRecipe) => {
     event.preventDefault()
 
-    if (!isAuthenticated) {
+    if (!user) {
       return
     }
 
-    console.log("add")
-    await addFavorite(recipeId, user.id)
+    recipe.isFavorite
+      ? await removeFavorite(recipe.id, user.id)
+      : await addFavorite(recipe.id, user.id)
   }
 
   return (
@@ -54,21 +56,18 @@ export default function RecipeCard({ recipe }: { recipe: IRecipeCard }) {
           {recipe.name}
         </div>
       </Link>
-      {recipe.isFavorite ? (
-        <Button
-          size="large"
-          icon={<MdFavorite size="100%" />}
-          href={`/admin/recipes/${slugify(recipe.name)}-${recipe.id}`}
-          className="absolute top-4 right-4 z-10"
-        />
-      ) : (
-        <Button
-          size="large"
-          icon={<MdFavoriteBorder size="100%" />}
-          onClick={(e) => handleAddFavorite(e, recipe.id)}
-          className="absolute top-4 right-4 z-10"
-        />
-      )}
+      <Button
+        size="large"
+        icon={
+          recipe.isFavorite ? (
+            <MdFavorite size="100%" />
+          ) : (
+            <MdFavoriteBorder size="100%" />
+          )
+        }
+        onClick={(e) => handleToggleFavorite(e, recipe)}
+        className="absolute top-4 right-4 z-10"
+      />
     </div>
   )
 }

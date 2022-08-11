@@ -1,5 +1,13 @@
 import { getAdmin } from "data/auth-service"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential, updateProfile as fbUpdateProfile } from "firebase/auth"
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  User,
+  UserCredential,
+  updateProfile as fbUpdateProfile,
+} from "firebase/auth"
+import { useRouter } from "next/router"
 import React, { ReactNode } from "react"
 import { auth } from "../data/firebase"
 
@@ -12,22 +20,24 @@ export interface IUser {
 }
 
 interface IAuthContext {
-  user: IUser
-  isAuthenticated: boolean
+  user: IUser | null
+  // TODO: do I need this now that user can be null ?
+  // isAuthenticated: boolean
   login: (username: string, password: string) => Promise<UserCredential>
   // loginWithProvider: () => Promise<void>
-  logout: () => Promise<void>
+  logout: (returnUrl: string) => Promise<void>
   register: (username: string, password: string) => Promise<UserCredential>
 
   updateProfile: (displayName: string, photoURL: string) => Promise<void>
 }
 
-const initialUser = {
-  id: "",
-  email: "",
-  displayName: "",
-  photoURL: "",
-} as IUser
+// TODO: need or remove ?
+// const initialUser = {
+//   id: "",
+//   email: "",
+//   displayName: "",
+//   photoURL: "",
+// } as IUser
 
 const AuthContext = React.createContext({} as IAuthContext)
 
@@ -36,26 +46,30 @@ interface IAuthProviderProps {
 }
 
 export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(true)
-  const [user, setUser] = React.useState<IUser>(initialUser)
+  const router = useRouter()
+  // const [isAuthenticated, setIsAuthenticated] = React.useState(false)
+  const [user, setUser] = React.useState<IUser | null>(null)
 
   React.useEffect(() => {
-    auth.onAuthStateChanged(async (data: User | null) => {
+    auth.onAuthStateChanged(async (firebaseUser: User | null) => {
+      if (firebaseUser) {
+        const admin = await getAdmin(firebaseUser.uid)
 
-      const admin = await getAdmin(data?.uid)
-      
-      const _user = data
-        ? {
-          id: data.uid,
-          email: data.email ?? "",
-          displayName: data.displayName ?? "",
-          photoURL: data.photoURL ?? "",
-          isAdmin: Boolean(admin)
+        // TODO: isAdmin is not secure!
+        const _user = {
+          id: firebaseUser.uid,
+          email: firebaseUser.email ?? "",
+          displayName: firebaseUser.displayName ?? "",
+          photoURL: firebaseUser.photoURL ?? "",
+          isAdmin: Boolean(admin),
         }
-        : initialUser
 
-      setUser(_user)
-      setIsAuthenticated(!!(_user && _user.email))
+        setUser(_user)
+        // setIsAuthenticated(!!(_user && _user.email))
+      } else {
+        setUser(null)
+        // setIsAuthenticated(false)
+      }
     })
   }, [])
 
@@ -72,8 +86,9 @@ export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
   //   return firebase.auth().signInWithRedirect(_provider)
   // }
 
-  const logout = async () => {
+  const logout = async (returnUrl: string = "/") => {
     await signOut(auth)
+    router.push(returnUrl)
   }
 
   const register = async (username: string, password: string) => {
@@ -96,7 +111,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
 
   const value = {
     user,
-    isAuthenticated,
+    // isAuthenticated,
     login,
     // loginWithProvider,
     logout,

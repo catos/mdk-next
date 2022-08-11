@@ -6,7 +6,7 @@ import { Button, Link, Popover } from "components/ui"
 import { useRouter } from "next/router"
 
 export default function Dropdown() {
-  const { isAuthenticated, user, logout } = useAuth()
+  const { user, logout } = useAuth()
   const [open, setOpen] = useState(false)
 
   // TODO: this is a weird way to close dropdown ?
@@ -38,7 +38,7 @@ export default function Dropdown() {
             onClick={(_) => setOpen(false)}
           />
 
-          {isAuthenticated ? (
+          {user ? (
             <>
               <div className="flex flex-col items-center">
                 {user.photoURL && (
@@ -68,7 +68,7 @@ export default function Dropdown() {
 
               <hr />
 
-              <Button color="primary" onClick={(_) => logout()}>
+              <Button color="primary" onClick={(_) => logout("/")}>
                 Logg ut
               </Button>
             </>

@@ -31,7 +31,7 @@ export default function Recipes(props: RecipesProps) {
     <div className="flex flex-col gap-4 bg-white">
       <section className="flex flex-col">
         <div className="relative">
-          {user.isAdmin && (
+          {user?.isAdmin && (
             <Button
               color="primary"
               icon={<FiEdit2 size="100%" />}

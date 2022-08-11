@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore"
 import { db } from "./firebase"
 
-export interface IRecipe {
+export interface IDBRecipe {
   id: string
   slug: string
   created: any
@@ -26,6 +26,10 @@ export interface IRecipe {
   tags: string[]
   time: number
   type: number
+}
+
+export interface IRecipe extends IDBRecipe {
+  isFavorite: boolean
 }
 
 export const defaultRecipe: IRecipe = {
@@ -42,6 +46,7 @@ export const defaultRecipe: IRecipe = {
   tags: [],
   time: -1,
   type: 1,
+  isFavorite: false,
 }
 
 // https://stackoverflow.com/a/69036032
@@ -63,8 +68,12 @@ export async function getRecipes(take = 10, afterId?: string) {
   const q = query(ref, ...constraints)
 
   const snapshot = await getDocs(q)
+
   const recipes = snapshot.docs.map((doc) => {
-    return { id: doc.id, ...doc.data() } as IRecipe
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as IRecipe
   })
 
   return recipes
