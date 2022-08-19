@@ -15,7 +15,7 @@ interface TRProps extends React.HTMLAttributes<HTMLTableRowElement> {
 
 export function TR(props: TRProps) {
   return (
-    <tr className="border-y" {...props} />
+    <tr className="border-y border-slate-100" {...props} />
   )
 }
 
@@ -25,6 +25,6 @@ interface TDProps extends React.HTMLAttributes<HTMLTableCellElement> {
 
 export function TD(props: TDProps) {
   return (
-    <td className="px-2 py-24" {...props} />
+    <td className="p-2" {...props} />
   )
 }

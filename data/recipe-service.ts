@@ -12,11 +12,17 @@ import {
 } from "firebase/firestore"
 import { db } from "./firebase"
 
+export enum RecipeType {
+  UNDEFINED,
+  DINNER,
+  FOO,
+  BAR,
+}
+
 export interface IRecipe {
   id: string
-  slug: string
-  created: any
-  published?: number
+  created: number
+  published: boolean
   description: string
   ingredients: string
   steps: string
@@ -25,14 +31,13 @@ export interface IRecipe {
   image: string
   tags: string[]
   time: number
-  type: number
+  type: RecipeType
 }
 
 export const defaultRecipe: IRecipe = {
   id: "",
-  slug: "",
-  created: new Date().toString(),
-  published: undefined,
+  created: Date.now(),
+  published: false,
   description: "",
   ingredients: "",
   steps: "",
@@ -45,14 +50,17 @@ export const defaultRecipe: IRecipe = {
 }
 
 // https://stackoverflow.com/a/69036032
-export async function getRecipes(take = 10, afterId?: string) {
+export async function getRecipes(take = 10, type?: number, afterId?: string) {
   const ref = collection(db, "recipes")
 
   const constraints = [
-    where("type", "==", 1),
-    // TODO: where("published", "==" , true)
+    where("published", "==", true),
     orderBy("created", "desc"),
   ]
+
+  if (type) {
+    constraints.push(where("type", "==", type))
+  }
 
   if (afterId) {
     const snap = await getDoc(doc(db, "recipes", afterId))
