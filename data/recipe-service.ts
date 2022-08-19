@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore"
 import { db } from "./firebase"
 
-export interface IDBRecipe {
+export interface IRecipe {
   id: string
   slug: string
   created: any
@@ -26,10 +26,6 @@ export interface IDBRecipe {
   tags: string[]
   time: number
   type: number
-}
-
-export interface IRecipe extends IDBRecipe {
-  isFavorite: boolean
 }
 
 export const defaultRecipe: IRecipe = {
@@ -46,7 +42,6 @@ export const defaultRecipe: IRecipe = {
   tags: [],
   time: -1,
   type: 1,
-  isFavorite: false,
 }
 
 // https://stackoverflow.com/a/69036032

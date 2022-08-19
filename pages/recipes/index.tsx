@@ -23,7 +23,6 @@ function useGetFavorites() {
     const fetchData = async () => {
       if (user) {
         const data = await getFavorites(user.id)
-        console.log(data)
         setFavorites(data)
       }
     }
@@ -33,58 +32,16 @@ function useGetFavorites() {
   return favorites
 }
 
-function useRecipes(initialRecipes: IRecipe[] = []) {
-  const { user } = useAuth()
-  const [recipes, setRecipes] = useState<IRecipe[]>(initialRecipes)
-  const [favorites, setFavorites] = useState<IFavorite[]>([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (user) {
-        const data = await getFavorites(user.id)
-        console.log(data)
-        setFavorites(data)
-      }
-    }
-    fetchData()
-  }, [user])
-
-  const toggleFavorite = async (recipe: IRecipe) => {
-    if (!user) {
-      return
-    }
-
-    recipe.isFavorite
-      ? await removeFavorite(recipe.id, user.id)
-      : await addFavorite(recipe.id, user.id)
-
-    const updatedRecipes = recipes.map((r) => {
-      return r.id === recipe.id ? { ...r, isFavorite: !r.isFavorite } : r
-    })
-
-    setRecipes(updatedRecipes)
-  }
-
-  return {
-    recipes,
-    toggleFavorite,
-  }
-}
-
 export default function Recipes(props: RecipesProps) {
   const ref = useRef<HTMLDivElement | null>(null)
   const { recipes, end } = useInfiniteRecipes(props.recipes, ref)
   const favorites = useGetFavorites()
-  const _recipes = recipes.map((recipe) => ({
-    ...recipe,
-    isFavorite: Boolean(favorites.find((p) => p.recipeId === recipe.id)),
-  }))
 
   return (
     <div className="container mx-auto">
       <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-        {_recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+        {recipes.map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} favorites={favorites} />
         ))}
       </div>
       {end && (

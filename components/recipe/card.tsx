@@ -6,18 +6,26 @@ import slugify from "lib/slugify"
 import { Button } from "components/ui"
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md"
 import useAuth from "contexts/auth"
-import { addFavorite, removeFavorite } from "data/favorite-service"
-import React from "react"
+import { addFavorite, IFavorite, removeFavorite } from "data/favorite-service"
+import React, { useEffect, useState } from "react"
 
 interface IRecipeCard {
   recipe: IRecipe
+  favorites: IFavorite[]
 }
 
 // TODO: move images to firebase
-export default function RecipeCard({ recipe }: IRecipeCard) {
+export default function RecipeCard({ recipe, favorites }: IRecipeCard) {
   const { user } = useAuth()
+  const [favorite, setFavorite] = useState(false)
 
-  // TODO: create useRecipe-hook, for use here and in index...
+  useEffect(() => {
+    if (favorites) {
+      const isFavorite = Boolean(favorites.find(p => p.recipeId === recipe.id))
+      setFavorite(isFavorite)
+    }
+  }, [favorites, recipe.id])
+
   const handleToggleFavorite = async (event: any, recipe: IRecipe) => {
     event.preventDefault()
 
@@ -25,9 +33,11 @@ export default function RecipeCard({ recipe }: IRecipeCard) {
       return
     }
 
-    recipe.isFavorite
+    favorite
       ? await removeFavorite(recipe.id, user.id)
       : await addFavorite(recipe.id, user.id)
+
+    setFavorite(!favorite)
   }
 
   return (
@@ -59,7 +69,7 @@ export default function RecipeCard({ recipe }: IRecipeCard) {
       <Button
         size="large"
         icon={
-          recipe.isFavorite ? (
+          favorite ? (
             <MdFavorite size="100%" />
           ) : (
             <MdFavoriteBorder size="100%" />
