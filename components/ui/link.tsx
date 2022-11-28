@@ -15,10 +15,10 @@ export default function Link({ href, color = "text-primary-600", className, chil
     "hover:underline",
     className
   )
-  
+
   return (
-    <NextLink href={href}>
-      <a className={classes} {...rest}>{children}</a>
+    <NextLink href={href} className={classes} {...rest}>
+      {children}
     </NextLink>
   )
 }

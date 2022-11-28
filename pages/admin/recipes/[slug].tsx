@@ -53,6 +53,11 @@ export default function Page({ recipe }: IProps) {
         onChange={handleChange}
         value={values.created.toString()}
       />
+      {/* <Switch
+        name="published"
+        onChange={handleChange}
+        value={values.published}
+      /> */}
       <Input name="name" onChange={handleChange} value={values.name} />
       <Input name="image" onChange={handleChange} value={values.image} />
       <Input name="source" onChange={handleChange} value={values.source} />

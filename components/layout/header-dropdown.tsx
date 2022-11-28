@@ -61,7 +61,7 @@ export default function Dropdown() {
               {user.isAdmin && (
                 <>
                   <hr />
-                  <Link href="/admin/recipes">Recipes (admin)</Link>
+                  <Link href="/admin">Admin dashboard</Link>
                   <Link href="/ui">UI Components</Link>
                 </>
               )}
